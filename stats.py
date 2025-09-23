@@ -12,3 +12,12 @@ def num_char(text):
             else:
                 char_dict[character] += 1
     return char_dict
+
+def sort_on(items):
+    return items["num"]
+
+def report(char_dict):
+    report_list = []
+    for i in char_dict:
+        report_list.append({"name": i, "num": char_dict[i]})
+    return report_list

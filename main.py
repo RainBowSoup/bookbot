@@ -1,6 +1,8 @@
 from pathlib import Path
 from stats import get_num_words
 from stats import num_char
+from stats import report
+from stats import sort_on
 
 def get_book_text(path_to_file):
     with open(path_to_file, encoding="utf-8") as f:
@@ -17,6 +19,17 @@ def main():
     return text
 
 text = main()
-get_num_words(text)
-print(num_char(text))
-# print(text)
+num_words = get_num_words(text)
+char_dict = num_char(text)
+items = report(char_dict)
+items.sort(reverse=True, key=sort_on)
+
+print(f"============ BOOKBOT ============\n"
+f"Analyzing book found at books/frankenstein.txt...\n"
+f"----------- Word Count ----------\n"
+f"{num_words}\n"
+f"--------- Character Count -------")
+for i in items:
+    if i["name"].isalpha():
+        print(f"{i['name']}: {i['num']}")
+print(f"============= END ===============")
