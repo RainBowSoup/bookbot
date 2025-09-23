@@ -3,6 +3,7 @@ from stats import get_num_words
 from stats import num_char
 from stats import report
 from stats import sort_on
+import sys
 
 def get_book_text(path_to_file):
     with open(path_to_file, encoding="utf-8") as f:
@@ -11,12 +12,17 @@ def get_book_text(path_to_file):
     return file_contents
 
 def main():
-    script_dir = Path(__file__).parent
-    book_path = script_dir / "books" / "frankenstein.txt"
-    # print(f"book path: {book_path}")
-    text = get_book_text(book_path)
-    # print(text)
-    return text
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    book_path = Path(sys.argv[1])
+    try:
+        book_text = get_book_text(book_path)
+    except FileNotFoundError:
+        print(f"Error: file not found at {book_path}")
+        sys.exit(1)
+    return book_text
+
 
 text = main()
 num_words = get_num_words(text)
@@ -25,7 +31,7 @@ items = report(char_dict)
 items.sort(reverse=True, key=sort_on)
 
 print(f"============ BOOKBOT ============\n"
-f"Analyzing book found at books/frankenstein.txt...\n"
+f"Analyzing book found at {sys.argv[1]}...\n"
 f"----------- Word Count ----------\n"
 f"{num_words}\n"
 f"--------- Character Count -------")
