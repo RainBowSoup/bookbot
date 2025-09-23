@@ -1,5 +1,6 @@
 from pathlib import Path
 from stats import get_num_words
+from stats import num_char
 
 def get_book_text(path_to_file):
     with open(path_to_file, encoding="utf-8") as f:
@@ -17,4 +18,5 @@ def main():
 
 text = main()
 get_num_words(text)
+print(num_char(text))
 # print(text)
